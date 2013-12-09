@@ -26,6 +26,7 @@
 
 	<modules>
 		<module>deskmanager</module>
+		<module>deskmanager-api</module>
 	</modules>
 
 	<properties>

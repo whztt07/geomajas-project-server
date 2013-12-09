@@ -93,6 +93,10 @@
 -->
 		<!-- Needed at compile time because we extend the default security manager and context -->
 		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-plugin-deskmanager-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-impl</artifactId>
 		</dependency>

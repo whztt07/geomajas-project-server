@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
 @Api(allMethods = true)
 public class AbstractPrintComponent<T extends PrintComponentInfo> extends PrintComponentImpl<T> {
 
-	private static final String BUNDLE_NAME = "org/geomajas/plugin/print/PrintMessages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org/geomajas/plugin/printing/PrintingMessages"; //$NON-NLS-1$
 
 	/** No-arguments constructor. */
 	public AbstractPrintComponent() {

@@ -11,8 +11,8 @@
 
 package org.geomajas.plugin.printing.component.dto;
 
-import org.geomajas.configuration.FontStyleInfo;
 import org.geomajas.annotation.Api;
+import org.geomajas.configuration.FontStyleInfo;
 
 /**
  * DTO object for LegendComponent.
@@ -34,7 +34,8 @@ public class LegendComponentInfo extends PrintComponentInfo {
 	public static final String DEFAULT_LEGEND_FONT_FAMILY = "Dialog";
 
 	/**
-	 * Tag used for LegendComponentInfo PrintComponentInfo. See {@link #PrintComponentInfo.setTag(String)} method.
+	 * Tag used for LegendComponentInfo PrintComponentInfo. See
+	 * {@link PrintComponentInfo#setTag(String)} method.
 	 * 
 	 * @since 2.4.0
 	 */
@@ -59,6 +60,12 @@ public class LegendComponentInfo extends PrintComponentInfo {
 	 * Title or Heading text of the legend
 	 */
 	private String title;
+
+	/**
+	 * Locale info, for legend.
+	 * TODO: change server side locale system.
+	 */
+	private String locale;
 
 	/**
 	 * Default constructor.
@@ -150,5 +157,28 @@ public class LegendComponentInfo extends PrintComponentInfo {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * Get locale.
+	 * TODO: change server side locale system.
+	 *
+	 * @return locale
+	 * @since 1.15.0
+	 */
+	public String getLocale() {
+		return locale;
+	}
+
+	/**
+	 * Set locale.
+	 * TODO: change server side locale system.
+	 *
+	 * @param locale
+	 *            locale
+	 * @since 1.15.0
+	 */
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 }

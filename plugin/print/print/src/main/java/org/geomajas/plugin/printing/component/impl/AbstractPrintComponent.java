@@ -82,7 +82,7 @@ public class AbstractPrintComponent<T extends PrintComponentInfo> extends PrintC
 		return resourceBundle;
 	}
 
-	private String getLocale() {
+	protected String getLocale() {
 		PrintComponent<?> ancestor = getParent();
 
 		while (null != ancestor && !(ancestor instanceof PageComponent)) {

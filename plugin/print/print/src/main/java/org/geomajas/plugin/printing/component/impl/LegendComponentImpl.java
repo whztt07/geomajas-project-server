@@ -57,6 +57,11 @@ public class LegendComponentImpl extends AbstractPrintComponent<LegendComponentI
 	/** Heading text. */
 	private String title;
 
+	/**
+	 * locale information.
+	 */
+	private String locale;
+
 	@Autowired
 	@XStreamOmitField
 	private PrintDtoConverterService converterService;
@@ -211,6 +216,20 @@ public class LegendComponentImpl extends AbstractPrintComponent<LegendComponentI
 		setApplicationId(legendInfo.getApplicationId());
 		setMapId(legendInfo.getMapId());
 		setFont(converterService.toInternal(legendInfo.getFont()));
+		setLocale(legendInfo.getLocale());
 		setTitle(legendInfo.getTitle());
+	}
+
+	@Override
+	protected String getLocale() {
+		if (locale != null) {
+			return locale;
+		} else {
+			return super.getLocale();
+		}
+	}
+
+	protected void setLocale(String locale) {
+		this.locale = locale;
 	}
 }

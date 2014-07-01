@@ -113,6 +113,10 @@
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-hibernate</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-plugin-staticsecurity</artifactId>
+		</dependency>
 
 		<!-- Need to depend on printing plugin because we override the print service to inject our own configuration -->
 		<dependency>

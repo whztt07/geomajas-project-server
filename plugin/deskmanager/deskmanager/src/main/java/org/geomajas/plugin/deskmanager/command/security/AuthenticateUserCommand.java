@@ -10,15 +10,23 @@
  */
 package org.geomajas.plugin.deskmanager.command.security;
 
-import org.geomajas.command.Command;
-import org.geomajas.global.GeomajasException;
 import org.geomajas.plugin.deskmanager.command.security.dto.AuthenticateUserRequest;
-import org.geomajas.plugin.deskmanager.command.security.dto.AuthenticateUserResponse;
-import org.geomajas.plugin.deskmanager.security.LoginService;
+import org.geomajas.plugin.deskmanager.domain.security.GroupMember;
+import org.geomajas.plugin.deskmanager.domain.security.Profile;
+import org.geomajas.plugin.deskmanager.security.LoginSession;
+import org.geomajas.plugin.deskmanager.security.ProfileService;
+import org.geomajas.plugin.deskmanager.service.common.DtoConverterService;
+import org.geomajas.plugin.staticsecurity.command.dto.LoginRequest;
+import org.geomajas.plugin.staticsecurity.command.dto.LoginResponse;
+import org.geomajas.plugin.staticsecurity.command.staticsecurity.LoginCommand;
+import org.geomajas.plugin.staticsecurity.configuration.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Command that will retrieve the profiles of a user for a specific geodesk.
@@ -26,25 +34,24 @@ import org.springframework.stereotype.Component;
  * @author Jan Venstermans
  */
 @Component(AuthenticateUserRequest.COMMAND)
-public class AuthenticateUserCommand implements Command<AuthenticateUserRequest, AuthenticateUserResponse> {
+public class AuthenticateUserCommand extends LoginCommand {
+
+	@Autowired
+	private ProfileService profileService;
+
+	@Autowired
+	private DtoConverterService converterService;
 
 	private final Logger log = LoggerFactory.getLogger(AuthenticateUserCommand.class);
 
-	@Autowired
-	private LoginService loginService;
-
-	public AuthenticateUserResponse getEmptyCommandResponse() {
-		return new AuthenticateUserResponse();
-	}
-
-	public void execute(AuthenticateUserRequest request, AuthenticateUserResponse response) throws Exception {
-		try {
-			String token = loginService.checkLogin(request.getUserName(), request.getPassword());
-			response.setSecurityToken(token);
-			log.info("Autentication Request for " + request.getUserName() + " successfully executed.");
-		} catch (Exception ex) {
-			log.error("Autentication exception for username " + request.getUserName(), ex);
-			throw new GeomajasException(ex); // wrap the security exception, otherwise no response to initial caller
+	public void execute(LoginRequest request, LoginResponse response) throws Exception {
+		super.execute(request, response);
+		/*final String convertedPass = authenticationService.convertPassword(request.getLogin(), request.getPassword());
+		UserInfo user = authenticationService.isAuthenticated(request.getLogin(), convertedPass);
+		List<Profile> profileList = new ArrayList<Profile>();
+		for (GroupMember member : user.getGroups()) {
+			profileList.add(converterService.toProfile(member));
 		}
+		response.setToken(profileService.registerProfilesForUser(new LoginSession(profileList)));*/
 	}
 }

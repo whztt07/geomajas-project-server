@@ -10,7 +10,7 @@
  */
 package org.geomajas.plugin.deskmanager.command.security.dto;
 
-import org.geomajas.command.CommandRequest;
+import org.geomajas.plugin.staticsecurity.command.dto.LoginRequest;
 
 
 /**
@@ -18,31 +18,9 @@ import org.geomajas.command.CommandRequest;
  *
  * @author Jan Venstermans
  */
-public class AuthenticateUserRequest implements CommandRequest {
+public class AuthenticateUserRequest extends LoginRequest {
 
 	private static final long serialVersionUID = 1L;
 
 	public static final String COMMAND = "command.deskmanager.security.AuthenticateUserCommand";
-
-	public static final String MANAGER_ID = "manager";
-
-	private String userName;
-
-	private String password;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }

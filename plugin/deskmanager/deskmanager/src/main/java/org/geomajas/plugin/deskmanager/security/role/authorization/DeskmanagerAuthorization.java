@@ -376,13 +376,14 @@ public class DeskmanagerAuthorization implements BaseAuthorization, AreaAuthoriz
 		}
 		Geometry geometry = null;
 		String crs = null;
-		if (getGeodesk().mustFilterByUserTerritory()) {
+		if (getGeodesk().mustFilterByUserTerritory() && !Role.ADMINISTRATOR.equals(getProfile().getRole())) {
 			geometry = getProfile().getTerritory().getGeometry();
 			crs = getProfile().getTerritory().getCrs();
-		} else if (getGeodesk().mustFilterByCreatorTerritory()) {
+		} else if (getGeodesk().mustFilterByCreatorTerritory() && getGeodesk().getOwner() != null) {
 			geometry = getGeodesk().getOwner().getGeometry();
 			crs = getGeodesk().getOwner().getCrs();
 		} else {
+			// fallback
 			geometry = all;
 		}
 		Layer<?> layer = (Layer<?>) applicationContext.getBean(layerId);

@@ -18,6 +18,8 @@ import org.geomajas.plugin.deskmanager.security.LoginService;
 import org.geomajas.plugin.deskmanager.security.LoginSession;
 import org.geomajas.plugin.deskmanager.security.ProfileService;
 import org.geomajas.plugin.deskmanager.service.common.DtoConverterService;
+import org.geomajas.plugin.staticsecurity.configuration.UserInfo;
+import org.geomajas.plugin.staticsecurity.security.AuthenticationService;
 import org.geomajas.security.GeomajasSecurityException;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -40,7 +42,7 @@ import java.util.List;
  */
 @Repository
 @Transactional(rollbackFor = { Exception.class })
-public class UserServiceImpl implements UserService, LoginService {
+public class UserServiceImpl implements UserService, AuthenticationService {
 
 	private static final String PREFIX = "Geomajas is a wonderful framework";
 
@@ -184,20 +186,29 @@ public class UserServiceImpl implements UserService, LoginService {
 	}
 
 	@Override
-	public String checkLogin(String email, String password) throws GeomajasSecurityException {
-		User user = findByAddress(email);
-		if (user != null && user.getPassword().equals(encodePassword(email, password))) {
-			try {
+	public String convertPassword(String email, String password) {
+		return encodePassword(email, password);
+	}
+
+	@Override
+	public UserInfo isAuthenticated(String email, String encodedPassword) {
+		try {
+			User user = findByAddress(email);
+			if (user != null && user.getPassword().equals(encodedPassword)) {
 				List<Profile> profileList = new ArrayList<Profile>();
 				for (GroupMember member : user.getGroups()) {
 					profileList.add(converterService.toProfile(member));
 				}
-				return profileService.registerProfilesForUser(new LoginSession(profileList));
-			} catch (GeomajasException ex) {
-				throw new GeomajasSecurityException(ex);
+				//String token = profileService.registerProfilesForUser(new LoginSession(profileList));
+				UserInfo userInfo = new UserInfo();
+				userInfo.setUserName(user.getName());
+				userInfo.setPassword(user.getPassword());
+				userInfo.setUserId(user.getEmail());
+				return userInfo;
 			}
+		} catch (GeomajasException ex) {
+			// do nothing
 		}
-		throw new GeomajasSecurityException();
+		return null;
 	}
-
 }

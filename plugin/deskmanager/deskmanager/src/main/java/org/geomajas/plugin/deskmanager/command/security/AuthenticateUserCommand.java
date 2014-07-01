@@ -11,6 +11,7 @@
 package org.geomajas.plugin.deskmanager.command.security;
 
 import org.geomajas.command.Command;
+import org.geomajas.global.GeomajasException;
 import org.geomajas.plugin.deskmanager.command.security.dto.AuthenticateUserRequest;
 import org.geomajas.plugin.deskmanager.command.security.dto.AuthenticateUserResponse;
 import org.geomajas.plugin.deskmanager.security.LoginService;
@@ -43,7 +44,7 @@ public class AuthenticateUserCommand implements Command<AuthenticateUserRequest,
 			log.info("Autentication Request for " + request.getUserName() + " successfully executed.");
 		} catch (Exception ex) {
 			log.error("Autentication exception for username " + request.getUserName(), ex);
-			throw ex;
+			throw new GeomajasException(ex); // wrap the security exception, otherwise no response to initial caller
 		}
 	}
 }
